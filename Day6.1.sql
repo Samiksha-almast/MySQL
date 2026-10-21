@@ -55,11 +55,45 @@ select*from Employee;
 select*from Employee order by experience limit 5; -- limit the no. of rows
 
 /*Is NULL: the is null operator determines whether or not a value is null.the expression returns 1(true) if the value is Null*/
-
-insert into employee values(7,'Kashish','Joshi','F','President',' ',null,null),
+insert  into employee values(7,'Asta','Magic','M','President','HR',' ',Null);
+ select * from employee;
+ select * from employee where Manager_id is null; 
+insert into employee values(7,'Kashish','Joshi','F','President','HR',' ',null),
 (8,'Khushu','Tilokani','M','Manager',' ',' ',' ',null),
 (9,'Khushi','Almast','F','Gaming dev','Tech',' ',null,null);
 
 select *from employee where manager_id is null;
 select *from employee where role is null;
 select * from employee;
+
+/*aggregate functions*/
+/*COUNT,SUM,AVG,MIN,MAX*/
+select count(*) from employee;
+select count(Empid) from employee where dept='Tech'; -- count--
+select min(Experience) from employee; -- min
+select max(Experience) from employee; -- max
+select sum(Experience) from employee; -- sum
+select avg(Experience) as emp_exr from employee; -- avgerage-- -- emp_exr is alisas name
+
+/*Group by clause:- Group by clause divides a set of rows into subgroups depending on column or expression values. The group by cluse is used with aggregate functions such as SUM,AVG,MAX,MIN, and COUNT.*/
+
+-- find the dept wise employee count
+select dept,count(*) as employee_count from employee group by dept;
+
+-- find the role wise employee count
+select role,count(*) as employee_count from employee group by role;
+
+-- find the gender wise employee count
+select gender,count(*) as employee_count from employee group by gender;
+
+/*Having clause:- Each grp produced by the group clause is evaluated by the having clause, and if the result is true, the row is included in the result set. The having cluase was added to SQL because the WHERE keyword cannot be used with aggregate functions.*/
+-- retail=18 finance-13 hr-21
+select*from employee;
+select dept,sum(experience) as total_experience from employee group by dept having total_experience>=5 AND total_experience<=10;
+select role,sum(experience) as total_experience from employee group by role having total_experience>=5 AND total_experience<=10;
+
+-- fetch department wise employee count using having clause and sort the data
+select dept,count(empid) from employee group by dept having count(empid) >2 order by count(empid);
+
+select dept,sum(experience) as total_experience from employee group by dept having total_experience>=5 Or total_experience<=10;
+
